@@ -12,7 +12,7 @@ const registerUser = asyncHandler(async (req,res) => {
       throw new ApiError(400,"All Fields are compulsory");
    }
 
-   const existedUser = User.findOne({
+   const existedUser = await User.findOne({
       $or: [{email},{username}]
    })
 
@@ -21,7 +21,16 @@ const registerUser = asyncHandler(async (req,res) => {
    }
 
    const avatarLocalPath = req.files?.avatar[0]?.path;
-   const coverImageLocalPath = req.files?.avatar[0]?.path;
+   // const coverImageLocalPath = req.files?.coverImage[0]?.path;
+
+   let coverImageLocalPath;
+
+   if(req.files.coverImage) {
+      coverImageLocalPath = req.files.coverImage[0].path;
+   }
+   else {
+      coverImageLocalPath = "";
+   }
 
    if(!avatarLocalPath) {
       throw new ApiError(400,"Avatar is required");

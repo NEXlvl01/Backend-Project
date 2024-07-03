@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         }
     ],
     password : {
-        type : Sring,
+        type : String,
         required : [true,"Password is required"]
     },
     refreshToken : {
